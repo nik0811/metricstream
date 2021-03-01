@@ -1,3 +1,8 @@
-module metricstream.com/metricstream
+module metricsviews.com/metricsviews
 
-go 1.16
+go 1.15
+
+require (
+	k8s.io/apimachinery v0.20.0
+	k8s.io/client-go v0.20.0
+)

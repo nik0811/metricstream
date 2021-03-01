@@ -1,12 +1,12 @@
 package main
 
 import (
-    "metricstream.com/metricstream/modules"
     "fmt"
+    "metricsviews.com/metricsviews/metrics/api/dir"
 )
 
 func main() {
 
-	dir := mdir.UserHomeDir()
+	dir := dir.UserHomeDir()
         fmt.Println(dir)
 }

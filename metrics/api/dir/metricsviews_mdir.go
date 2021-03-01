@@ -1,4 +1,4 @@
-package mdir 
+package dir
 import (
 
 	"os"
