@@ -1,4 +1,4 @@
-package main
+package kube_connect
 
 import (
    "metricsviews.com/metricsviews/metrics/api/dir"
@@ -9,9 +9,10 @@ import (
    "flag"
    "fmt"
    "context"
+   "strings"
 )
 
-func main() {
+func MetricsPods() {
 	var kubeconfig *string
 	if home := dir.UserHomeDir(); home != "" {
             kubeconfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
@@ -30,12 +31,14 @@ func main() {
 	if err != nil {
 		panic(err.Error())
 	}
-	pods, err := clientset.CoreV1().Pods("").List(context.TODO(), metav1.ListOptions{})
+	pods, err := clientset.CoreV1().Pods("kube-system").List(context.TODO(), metav1.ListOptions{})
         if err != nil {
            panic(err.Error())
         }
-        for _, pod := range pods.Items {
-            fmt.Printf("pod name: %s \n namespace: %s\n", pod.ObjectMeta.GetName(), pod.ObjectMeta.GetNamespace())
+	metrics_pods := []string{}
+	for _, pod := range pods.Items {
+               //fmt.Printf("pod name: %s\nnamespace: %s\n", pod.ObjectMeta.GetName(), pod.ObjectMeta.GetNamespace())
+	       metrics_pods = append(metrics_pods, pod.ObjectMeta.GetName())
 	}
-
+	fmt.Printf(strings.Join(metrics_pods, ", "))
 }
